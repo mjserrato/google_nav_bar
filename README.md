@@ -13,7 +13,7 @@ Add this to your package's `pubspec.yaml` file:
 ```
 ...
 dependencies:
-  google_nav_bar: ^0.0.1
+  google_nav_bar: ^1.0.0
 ```
 
 Now in your Dart code, you can use:
