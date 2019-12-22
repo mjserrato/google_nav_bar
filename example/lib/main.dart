@@ -1,43 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:line_icons/line_icons.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(TabPage());
 
-class MyApp extends StatelessWidget {
+class TabPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      // title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
+  _TabPageState createState() => _TabPageState();
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage>
-    with SingleTickerProviderStateMixin {
+class _TabPageState extends State<TabPage> {
   int selectedIndex = 0;
+
+  PageController controller = PageController();
 
   List<GButton> tabs = new List();
   List<Color> colors = [
@@ -46,11 +21,6 @@ class _MyHomePageState extends State<MyHomePage>
     Colors.amber[600],
     Colors.teal
   ];
-
-  // int count = 4;
-
-  AnimationController expandController;
-  Animation<double> animation;
 
   @override
   void initState() {
@@ -112,33 +82,55 @@ class _MyHomePageState extends State<MyHomePage>
     ));
   }
 
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        body: AnimatedContainer(
-          duration: Duration(milliseconds: 600),
-          color: colors[selectedIndex],
-          child: Center(
-            child: Container(
-              decoration: BoxDecoration(color: Colors.white, boxShadow: [
+
+    
+    return MaterialApp(
+          home: Scaffold(
+            extendBody: true,
+appBar: AppBar(
+  brightness: Brightness.dark,
+  title: Text('GoogleNavBar',style: TextStyle(color: Colors.black),),backgroundColor: Colors.white,),
+            body: PageView.builder(
+              onPageChanged: (page) {
+                setState(() {
+                  selectedIndex = page;
+                });
+              },
+              controller: controller,
+  itemBuilder: (context, position) {
+    return Container(color: colors[position],);
+  },
+  itemCount: tabs.length, // Can be null
+),
+            // backgroundColor: Colors.green,
+            // body: Container(color: Colors.red,),
+        bottomNavigationBar: SafeArea(
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(color :Colors.white, borderRadius: BorderRadius.all(Radius.circular(100)),boxShadow: [
                 BoxShadow(spreadRadius: -10, blurRadius: 60, color: Colors.black.withOpacity(.20), offset: Offset(0,15))
               ]),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 25),
-                child: GNav(
-                    tabs: tabs,
-                    selectedIndex: 0,
-                    onTabChange: (index) {
-                      print(index);
-                      setState(() {
-                        selectedIndex = index;
-                      });
-                    }),
-              ),
-            ),
-          ),
-        ));
+                    child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5),
+                    child: GNav(
+                        tabs: tabs,
+                        selectedIndex: selectedIndex,
+                        onTabChange: (index) {
+                          print(index);
+                          setState(() {
+                            selectedIndex = index;
+                          });
+                          controller.jumpToPage(index);
+                        }),
+                ),
+                  ),
+        ),
+
+      ),
+    );
   }
 }

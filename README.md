@@ -7,13 +7,17 @@ A modern google style nav bar for flutter.
 
 GoogleNavBar is a Flutter widget designed by [cubertodesign](https://dribbble.com/shots/5925052-Google-Bottom-Bar-Navigation-Pattern/) and developed by [sooxt98](https://www.instagram.com/sooxt98/).
 
+![example](https://user-images.githubusercontent.com/13378059/71321360-2b47cc80-24f3-11ea-9b1b-389355ae8661.gif)
+
+
 ## Getting Started
 
 Add this to your package's `pubspec.yaml` file:
 ```
 ...
 dependencies:
-  google_nav_bar: ^1.0.0
+  google_nav_bar: ^1.0.1
+  
 ```
 
 Now in your Dart code, you can use:

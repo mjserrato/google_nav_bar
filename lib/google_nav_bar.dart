@@ -3,7 +3,7 @@ library google_nav_bar;
 import 'package:flutter/material.dart';
 
 class GNav extends StatefulWidget {
-  GNav({Key key, this.tabs, this.selectedIndex, this.onTabChange});
+  GNav({Key key, this.tabs, this.selectedIndex = 0, this.onTabChange});
 
   final List<GButton> tabs;
   final int selectedIndex;
@@ -14,16 +14,19 @@ class GNav extends StatefulWidget {
 }
 
 class _GNavState extends State<GNav> {
-  int selectedIndex = 0;
+  int selectedIndex;
 
   @override
   void initState() {
     super.initState();
-    selectedIndex = widget.selectedIndex;
+    
   }
 
   @override
   Widget build(BuildContext context) {
+    
+    selectedIndex = widget.selectedIndex;
+
     return Container(
         // padding: EdgeInsets.all(12),
         // alignment: Alignment.center,
